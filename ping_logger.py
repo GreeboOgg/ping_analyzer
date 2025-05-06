@@ -4,6 +4,11 @@ import csv
 from datetime import datetime
 import os
 
+# Configuration
+OUTPUT_FILE = 'D:/Eclipse/python/output.txt'
+PING_INTERVAL = 30  # seconds between pings
+RUNTIME_MINUTES = 30  # total runtime in minutes
+
 def ping_host(host="8.8.8.8"):
     try:
         # Run ping command and capture output
@@ -23,13 +28,12 @@ def ping_host(host="8.8.8.8"):
 
 def main():
     # Create output directory if it doesn't exist
-    output_dir = r"D:\Eclipse\python"
+    output_dir = os.path.dirname(OUTPUT_FILE)
     os.makedirs(output_dir, exist_ok=True)
     
-    end_time = time.time() + (30 * 60)  # 30 minutes from now
+    end_time = time.time() + (RUNTIME_MINUTES * 60)  # convert minutes to seconds
     
-    output_file = os.path.join(output_dir, "output.txt")
-    with open(output_file, "w", newline='') as csvfile:
+    with open(OUTPUT_FILE, "w", newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(["timestamp", "time_ms"])
         
@@ -41,8 +45,8 @@ def main():
                 writer.writerow([timestamp, ping_time])
                 csvfile.flush()  # Ensure data is written immediately
             
-            # Wait for 30 seconds before next ping
-            time.sleep(30)
+            # Wait for specified interval before next ping
+            time.sleep(PING_INTERVAL)
 
 if __name__ == "__main__":
     main() 

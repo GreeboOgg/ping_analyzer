@@ -2,8 +2,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime
 
+# Configuration
+INPUT_FILE = 'D:/Eclipse/python/output.txt'
+
 # Read the CSV file
-df = pd.read_csv('output.txt')
+df = pd.read_csv(INPUT_FILE)
 
 # Convert timestamp to datetime
 df['timestamp'] = pd.to_datetime(df['timestamp'])
